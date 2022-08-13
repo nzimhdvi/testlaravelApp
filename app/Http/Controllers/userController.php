@@ -20,13 +20,18 @@ class userController extends Controller
     }
     public  function store(request $request)
     {
-        $formFields= $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+       $request->validate([
 
-          User::create($formFields);
+           'name' => 'required',
+           'email' => 'required|email',
+           'password' => 'required|min:6|confirmed',
+       ]);
+
+      $user= User::create([
+           'name' => $request->name,
+           'email' => $request->email,
+           'password' => $request->password
+       ]);
 
         return redirect('/');
     }
